@@ -1,5 +1,12 @@
-# Test Placeholder
+# Tests
 
-Runtime tests have not been added yet.
+This directory contains the first TypeScript runtime tests.
 
-Future tests should cover release claims, local I2P status, identity storage, contact invites, message storage, log sanitization, and optional integration boundaries.
+Current scope:
+
+- local status mapping
+- severity mapping
+- unknown status fallback
+- safe diagnostic guardrails
+
+Future tests should cover local I2P readiness behavior, identity storage, contact invites, message storage, log sanitization, and optional integration boundaries as those features are implemented.

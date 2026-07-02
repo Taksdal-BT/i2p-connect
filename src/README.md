@@ -1,5 +1,13 @@
-# Source Placeholder
+# Source
 
-Runtime source code has not been added yet.
+This directory contains the first TypeScript runtime skeleton for I2P Connect.
 
-The first runtime PR should select the stack, build commands, test commands, local storage approach, and I2P status integration strategy before adding implementation code.
+Current scope:
+
+- pure local status mapping under `src/status/`
+- beginner-friendly labels
+- safe diagnostic messages
+- no router probing
+- no I2P transport
+- no UI
+- no Supabase or cloud sync

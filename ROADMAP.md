@@ -27,15 +27,17 @@ The first runtime PR should add pure local status logic only. It should not add 
 
 ## Phase 1: Local App Skeleton
 
+Status: in progress.
+
 Goal: create a minimal local-first TypeScript package before any UI shell.
 
 Deliverables:
 
-- selected runtime stack
-- build and test pipeline
-- pure local status model
-- clear mode labels
-- sanitized diagnostics foundation
+- selected runtime stack: complete
+- build and test pipeline: initial skeleton added
+- pure local status model: initial skeleton added
+- clear mode labels: initial skeleton added
+- sanitized diagnostics foundation: initial skeleton added
 
 ## Phase 2: Local I2P Status
 

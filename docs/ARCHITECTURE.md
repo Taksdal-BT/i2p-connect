@@ -1,6 +1,6 @@
 # Architecture
 
-I2P Connect is currently documentation-only. This file defines the intended architecture before runtime code is added.
+I2P Connect currently contains foundation documentation and a minimal TypeScript local status package skeleton. The skeleton is pure local mapping logic only; it does not probe routers, open network connections, send messages, add UI, or integrate with cloud services.
 
 ## Architecture Goals
 

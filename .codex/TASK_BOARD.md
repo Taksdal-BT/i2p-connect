@@ -2,7 +2,6 @@
 
 ## Ready
 
-- 02 TypeScript skeleton
 - 03 local I2P status model
 - 04 identity model
 - 05 contact invite flow
@@ -19,6 +18,7 @@
 - Greenfield repository structure proposed.
 - Codex automation layer committed.
 - 01 runtime stack ADR: TypeScript local package first.
+- 02 TypeScript skeleton: pure status mapping package and npm validation.
 
 ## Rules
 

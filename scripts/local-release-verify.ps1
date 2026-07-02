@@ -4,6 +4,7 @@ Set-StrictMode -Version Latest
 $RepoRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $ClaimCheck = Join-Path $PSScriptRoot 'check-release-claims.ps1'
 $OnboardingMissions = Join-Path $RepoRoot 'product/onboarding_missions.json'
+$PackageJson = Join-Path $RepoRoot 'package.json'
 
 Push-Location $RepoRoot
 try {
@@ -88,7 +89,33 @@ catch {
     exit 1
 }
 
+if (Test-Path -LiteralPath $PackageJson -PathType Leaf) {
+    Push-Location $RepoRoot
+    try {
+        $NpmValidationCommands = @(
+            @('run', 'check'),
+            @('run', 'build'),
+            @('test')
+        )
+
+        foreach ($CommandArguments in $NpmValidationCommands) {
+            $CommandText = "npm $($CommandArguments -join ' ')"
+            Write-Host "Running $CommandText"
+            & npm @CommandArguments
+            if ($LASTEXITCODE -ne 0) {
+                exit $LASTEXITCODE
+            }
+        }
+    }
+    finally {
+        Pop-Location
+    }
+}
+
 Write-Host 'git diff --check passed.'
 Write-Host 'Required file check passed.'
 Write-Host 'Onboarding mission JSON validation passed.'
+if (Test-Path -LiteralPath $PackageJson -PathType Leaf) {
+    Write-Host 'npm validation passed.'
+}
 Write-Host 'Local release verification passed.'
