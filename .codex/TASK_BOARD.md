@@ -2,8 +2,6 @@
 
 ## Ready
 
-- 00 commit foundation
-- 01 runtime stack ADR
 - 02 TypeScript skeleton
 - 03 local I2P status model
 - 04 identity model
@@ -19,6 +17,8 @@
 ## Done
 
 - Greenfield repository structure proposed.
+- Codex automation layer committed.
+- 01 runtime stack ADR: TypeScript local package first.
 
 ## Rules
 

@@ -4,7 +4,7 @@ This roadmap keeps the greenfield repository focused and honest.
 
 ## Phase 0: Repo Foundation
 
-Status: current phase.
+Status: complete.
 
 Acceptance criteria:
 
@@ -17,16 +17,23 @@ Acceptance criteria:
 - Codex prompts exist
 - validation scripts pass
 - no runtime code is added
+- initial runtime stack is documented in `docs/DECISIONS/ADR-0002-runtime-stack.md`
+
+## M1 Runtime Direction
+
+Initial stack: TypeScript local package first.
+
+The first runtime PR should add pure local status logic only. It should not add UI, real network probing, I2P transport, Supabase, private key storage, contact syncing, or message transport.
 
 ## Phase 1: Local App Skeleton
 
-Goal: create a minimal local-first application shell.
+Goal: create a minimal local-first TypeScript package before any UI shell.
 
 Deliverables:
 
 - selected runtime stack
 - build and test pipeline
-- local status surface
+- pure local status model
 - clear mode labels
 - sanitized diagnostics foundation
 
