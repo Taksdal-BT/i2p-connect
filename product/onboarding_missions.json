@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "status": "foundation_only",
+  "missions": [
+    {
+      "id": "understand_i2p_connect",
+      "title": "Understand I2P Connect",
+      "goal": "Explain the current mode, local-first model, and honest limits.",
+      "user_outcome": "The user knows what is available now and what comes later.",
+      "release_gate": "Documentation only."
+    },
+    {
+      "id": "check_local_i2p_readiness",
+      "title": "Check Local I2P Readiness",
+      "goal": "Measure whether local I2P services are reachable.",
+      "user_outcome": "The user sees a clear local readiness state.",
+      "release_gate": "Requires runtime implementation and tests."
+    },
+    {
+      "id": "create_local_identity",
+      "title": "Create Local Identity",
+      "goal": "Create identity material that stays on the user's device.",
+      "user_outcome": "The user understands storage, backup, and loss risks.",
+      "release_gate": "Requires local persistence design and tests."
+    },
+    {
+      "id": "verify_contact_invite",
+      "title": "Verify Contact Invite",
+      "goal": "Help two users verify contact information safely.",
+      "user_outcome": "The user understands why verification matters.",
+      "release_gate": "Requires invite format and verification tests."
+    },
+    {
+      "id": "send_first_private_message",
+      "title": "Send First Private Message",
+      "goal": "Queue and send a first private message after transport and envelope work exists.",
+      "user_outcome": "The user sees measured message state.",
+      "release_gate": "Requires message storage, transport, envelope, and log-safety tests."
+    },
+    {
+      "id": "try_audio_note",
+      "title": "Try Audio Note",
+      "goal": "Explore asynchronous audio notes as an experiment.",
+      "user_outcome": "The user understands permission and storage behavior.",
+      "release_gate": "Requires audio permission copy, local storage, and experimental labeling."
+    }
+  ]
+}
