@@ -35,9 +35,9 @@ Deliverables:
 
 - selected runtime stack: complete
 - build and test pipeline: initial skeleton added
-- pure local status model: initial skeleton added
-- clear mode labels: initial skeleton added
-- sanitized diagnostics foundation: initial skeleton added
+- pure local status model: expanded with severity and unknown fallback
+- clear mode labels: expanded with beginner-safe status copy
+- sanitized diagnostics foundation: expanded with advanced diagnostics and redaction utility
 
 ## Phase 2: Local I2P Status
 

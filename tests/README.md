@@ -8,5 +8,7 @@ Current scope:
 - severity mapping
 - unknown status fallback
 - safe diagnostic guardrails
+- advanced diagnostic copy
+- diagnostic redaction utility
 
 Future tests should cover local I2P readiness behavior, identity storage, contact invites, message storage, log sanitization, and optional integration boundaries as those features are implemented.

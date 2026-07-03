@@ -4,7 +4,9 @@ This file defines security boundaries for the greenfield foundation.
 
 ## Current State
 
-No runtime code exists yet. The current security model is a set of constraints for future implementation.
+The repository now includes a minimal TypeScript local status model. It maps supplied local status values to beginner-friendly copy, severity, and safe diagnostics.
+
+The current runtime code does not probe ports, open network connections, connect to SAM, inspect I2PTunnel, access the router console, send messages, store identity material, or sync data externally.
 
 ## Sensitive Data
 
@@ -41,6 +43,8 @@ Future runtime code must:
 Logs may include coarse local readiness state and sanitized error categories.
 
 Logs must not include private keys, private destinations, message bodies, invite secrets, contact lists, router credentials, raw router logs, sensitive headers, or deanonymizing metadata.
+
+The current TypeScript status model includes a local redaction utility for future diagnostics. Redaction is a guardrail only; sensitive values should not be collected or passed to diagnostics by default.
 
 ## Claim Boundary
 

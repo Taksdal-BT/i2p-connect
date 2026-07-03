@@ -1,6 +1,6 @@
 # Architecture
 
-I2P Connect currently contains foundation documentation and a minimal TypeScript local status package skeleton. The skeleton is pure local mapping logic only; it does not probe routers, open network connections, send messages, add UI, or integrate with cloud services.
+I2P Connect currently contains foundation documentation and a minimal TypeScript local status model. The runtime code is pure local mapping logic only; it does not probe routers, open network connections, connect to SAM, inspect I2PTunnel, send messages, add UI, or integrate with cloud services.
 
 ## Architecture Goals
 
@@ -18,8 +18,9 @@ I2P Connect currently contains foundation documentation and a minimal TypeScript
    - Does not depend on cloud services for core communication.
 
 2. Local I2P status adapter
-   - Detects whether a local I2P router is reachable.
-   - Uses localhost-bound router integration.
+   - Currently maps supplied local status values to beginner-friendly copy, severity, and safe diagnostics.
+   - Future work may detect whether a local I2P router is reachable.
+   - Future router integration must use localhost-bound defaults.
    - Never exposes router/admin/control ports publicly.
    - Reports measured states such as "router reachable" or "SAM session ready" only after implementation.
 
