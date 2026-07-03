@@ -4,9 +4,9 @@ This file defines security boundaries for the greenfield foundation.
 
 ## Current State
 
-The repository now includes a minimal TypeScript local status model, a local-first identity model, and a versioned contact invite model. Status code maps supplied local status values to beginner-friendly copy, severity, and safe diagnostics. Identity code creates and validates local profile metadata only. Contact invite code exports public/shareable contact metadata only.
+The repository now includes a minimal TypeScript local status model, a local-first identity model, a versioned contact invite model, and a local-only private message domain model. Status code maps supplied local status values to beginner-friendly copy, severity, and safe diagnostics. Identity code creates and validates local profile metadata only. Contact invite code exports public/shareable contact metadata only. Message code models local message state only.
 
-The current runtime code does not probe ports, open network connections, connect to SAM, inspect I2PTunnel, access the router console, send messages, generate private keys, store private key material, create contact directories, sync contact graphs, or sync data externally.
+The current runtime code does not probe ports, open network connections, connect to SAM, inspect I2PTunnel, access the router console, send messages, implement real encryption, generate private keys, store private key material, create contact directories, sync contact graphs, store messages in Supabase, or sync data externally.
 
 ## Sensitive Data
 
@@ -34,6 +34,8 @@ The current identity model stores only local profile metadata: `localProfileId`,
 Safe identity serialization must exclude secret-like fields and mark that no private key is stored, no cloud sync happened, and no real I2P identity has been created.
 
 The current contact invite model exports only version, display name, public contact id, creation timestamp, and an optional note. It rejects unknown versions and extra fields, and safe invite views state that no private key, private destination, router metadata, contact graph, or real-world identity proof is included.
+
+The current message model stores only local domain fields and an `encryptedPayloadPlaceholder`. The placeholder is not real encryption. Redacted message views omit payload placeholders and explicitly state that this module did not encrypt the payload, send transport data, confirm delivery, and does not claim full E2EE.
 
 ## Network Boundary
 

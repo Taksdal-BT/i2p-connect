@@ -2,7 +2,7 @@
 
 I2P Connect is a greenfield project for a secure, beginner-friendly, local-first, I2P-native communication platform for digital autonomy.
 
-This repository contains the foundation docs plus minimal TypeScript local status, identity metadata, and contact invite models. The runtime code is pure local domain logic only: it does not probe routers, open network connections, generate private keys, send messages, create contact directories, add UI, or integrate with cloud services.
+This repository contains the foundation docs plus minimal TypeScript local status, identity metadata, contact invite, and private message domain models. The runtime code is pure local domain logic only: it does not probe routers, open network connections, generate private keys, implement real encryption, send messages, create contact directories, add UI, or integrate with cloud services.
 
 ## What I2P Connect Is
 
@@ -79,9 +79,11 @@ Supabase, if used later, is optional and non-sensitive only. See `docs/SUPABASE_
 - `src/status/`: pure TypeScript status mapping and safe diagnostic helpers.
 - `src/identity/`: local profile metadata, validation, and safe identity views.
 - `src/contacts/`: versioned public/shareable contact invite payloads.
+- `src/messages/`: local-only private message domain model and redacted views.
 - `tests/status/`: TypeScript status mapping tests.
 - `tests/identity/`: TypeScript identity metadata tests.
 - `tests/contacts/`: TypeScript contact invite tests.
+- `tests/messages/`: TypeScript private message domain tests.
 
 ## Validation
 

@@ -1,6 +1,6 @@
 # Architecture
 
-I2P Connect currently contains foundation documentation, a minimal TypeScript local status model, a local-first identity metadata model, and a public/shareable contact invite model. The runtime code is pure local domain logic only; it does not probe routers, open network connections, connect to SAM, inspect I2PTunnel, generate private keys, send messages, create contact directories, add UI, or integrate with cloud services.
+I2P Connect currently contains foundation documentation, a minimal TypeScript local status model, a local-first identity metadata model, a public/shareable contact invite model, and a local-only private message domain model. The runtime code is pure local domain logic only; it does not probe routers, open network connections, connect to SAM, inspect I2PTunnel, generate private keys, implement real encryption, send messages, create contact directories, add UI, or integrate with cloud services.
 
 ## Architecture Goals
 
@@ -39,7 +39,9 @@ I2P Connect currently contains foundation documentation, a minimal TypeScript lo
    - Makes verification risk visible.
 
 5. Message layer
-   - Adds private messages only after storage, transport, and cryptographic boundaries are implemented and tested.
+   - Currently models local message fields, validation, status transitions, and redacted views only.
+   - Uses an `encryptedPayloadPlaceholder` that is not real encryption.
+   - Does not send over I2P, store messages in Supabase, or claim delivery.
    - Full E2EE is not promised until implementation and tests support that claim.
 
 6. Audio note layer

@@ -14,9 +14,14 @@ Current scope:
 - safe identity views that exclude secret-like fields
 - public/shareable contact invite payloads under `src/contacts/`
 - trust warning copy for invite acceptance
+- local-only private message domain model under `src/messages/`
+- redacted message views that omit payload placeholders
 - no router probing
 - no SAM, proxy, or I2PTunnel probing
 - no private key generation or storage
+- no real encryption implementation
+- no message transport or delivery claims
+- no Supabase message storage
 - no contact directory or contact graph sync
 - no I2P transport
 - no UI

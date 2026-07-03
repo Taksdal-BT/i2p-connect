@@ -67,15 +67,17 @@ Deliverables:
 
 ## Phase 4: Private Message MVP
 
+Status: in progress.
+
 Goal: send a first private message after storage, transport, and cryptographic boundaries are implemented and tested.
 
 Deliverables:
 
-- message queue
-- local message store
-- app-layer envelope
-- sanitized logging tests
-- delivery/readiness states
+- message queue: local status transitions modeled, no transport yet
+- local message store: not implemented yet
+- app-layer envelope: placeholder only, no real encryption yet
+- sanitized logging tests: redacted message view tests added
+- delivery/readiness states: local states modeled, no delivery claim
 
 ## Phase 5: Audio Message Prototype
 

@@ -2,7 +2,6 @@
 
 ## Ready
 
-- 06 private message model
 - 07 Supabase extension plan
 - 08 GitHub release hardening
 
@@ -19,6 +18,7 @@
 - 03 local I2P status model: severity, copy, advanced diagnostics, redaction, and fallback tests.
 - 04 identity model: local metadata, validation, safe serialization, and secret redaction tests.
 - 05 contact invite flow: versioned public invite payload, safe export, trust warnings, and validation tests.
+- 06 private message model: local-only message fields, validation, transitions, redacted views, and tests.
 
 ## Rules
 
