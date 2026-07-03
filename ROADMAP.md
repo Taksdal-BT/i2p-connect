@@ -109,3 +109,14 @@ Allowed examples:
 Forbidden examples are listed in `docs/SUPABASE_BOUNDARY.md`.
 
 The optional Supabase extension plan is documented in `docs/SUPABASE_EXTENSION_PLAN.md`. No Supabase project, live migrations, policies, functions, seed data, credentials, or runtime integration exist yet.
+
+## Foundation Hardening
+
+Status: complete.
+
+Deliverables:
+
+- GitHub validation workflows run on push and pull requests
+- release-claim guardrails documented in `docs/CLAIMS_REGISTER.md`
+- validation process documented in `docs/VALIDATION.md`
+- PR checklist added to `CONTRIBUTING.md`

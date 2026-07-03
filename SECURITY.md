@@ -1,6 +1,6 @@
 # Security Policy
 
-I2P Connect is currently documentation-only. No runtime communication code, router integration, identity store, or message transport exists yet.
+I2P Connect currently has local TypeScript domain models for status, identity metadata, contact invites, and private message state. These models do not probe routers, open network connections, implement real encryption, create private keys, send messages, store messages in Supabase, or claim delivery.
 
 ## Reporting Security Issues
 
@@ -17,6 +17,8 @@ Security review currently covers:
 - GitHub issue/workflow hygiene
 - validation scripts
 - prevention of accidental secret inclusion
+- local-only TypeScript domain models
+- redacted views and log-safety helpers
 
 Future runtime releases must add supported versions, disclosure handling, dependency policy, cryptographic review expectations, and platform-specific security notes.
 

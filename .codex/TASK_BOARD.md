@@ -2,7 +2,7 @@
 
 ## Ready
 
-- 08 GitHub release hardening
+- Foundation PR review and merge
 
 ## In Progress
 
@@ -19,6 +19,7 @@
 - 05 contact invite flow: versioned public invite payload, safe export, trust warnings, and validation tests.
 - 06 private message model: local-only message fields, validation, transitions, redacted views, and tests.
 - 07 Supabase extension plan: optional non-sensitive tables, RLS, secret rules, rollback, and advisor checklist.
+- 08 GitHub release hardening: validation docs, claims register, PR checklist, and required-file gate.
 
 ## Rules
 
