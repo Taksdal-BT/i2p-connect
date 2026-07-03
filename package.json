@@ -9,7 +9,7 @@
   "scripts": {
     "check": "tsc --noEmit",
     "build": "tsc --outDir dist",
-    "test": "tsc --outDir dist && node dist/tests/status/statusMapper.test.js && node dist/tests/identity/identity.test.js"
+    "test": "tsc --outDir dist && node dist/tests/status/statusMapper.test.js && node dist/tests/identity/identity.test.js && node dist/tests/contacts/contactInvite.test.js"
   },
   "devDependencies": {
     "typescript": "^6.0.3"

@@ -61,8 +61,8 @@ Deliverables:
 
 - local identity metadata model: initial implementation added
 - local persistence: not implemented yet
-- contact invite format
-- verification UX
+- contact invite format: initial versioned public payload added
+- verification UX: trust warning copy modeled, UI not implemented
 - backup/export warnings: warning state modeled, UI not implemented
 
 ## Phase 4: Private Message MVP

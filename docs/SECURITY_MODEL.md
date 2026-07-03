@@ -4,9 +4,9 @@ This file defines security boundaries for the greenfield foundation.
 
 ## Current State
 
-The repository now includes a minimal TypeScript local status model and a local-first identity model. Status code maps supplied local status values to beginner-friendly copy, severity, and safe diagnostics. Identity code creates and validates local profile metadata only.
+The repository now includes a minimal TypeScript local status model, a local-first identity model, and a versioned contact invite model. Status code maps supplied local status values to beginner-friendly copy, severity, and safe diagnostics. Identity code creates and validates local profile metadata only. Contact invite code exports public/shareable contact metadata only.
 
-The current runtime code does not probe ports, open network connections, connect to SAM, inspect I2PTunnel, access the router console, send messages, generate private keys, store private key material, or sync data externally.
+The current runtime code does not probe ports, open network connections, connect to SAM, inspect I2PTunnel, access the router console, send messages, generate private keys, store private key material, create contact directories, sync contact graphs, or sync data externally.
 
 ## Sensitive Data
 
@@ -32,6 +32,8 @@ Sensitive communication data stays local by default. Cloud services must not sto
 The current identity model stores only local profile metadata: `localProfileId`, `displayName`, `publicContactId`, timestamps, and backup warning state. It does not create or store private I2P keys, private destinations, invite secrets, contact graphs, or transport credentials.
 
 Safe identity serialization must exclude secret-like fields and mark that no private key is stored, no cloud sync happened, and no real I2P identity has been created.
+
+The current contact invite model exports only version, display name, public contact id, creation timestamp, and an optional note. It rejects unknown versions and extra fields, and safe invite views state that no private key, private destination, router metadata, contact graph, or real-world identity proof is included.
 
 ## Network Boundary
 

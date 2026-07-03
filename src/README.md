@@ -12,9 +12,12 @@ Current scope:
 - redaction utility for future diagnostics
 - local identity metadata under `src/identity/`
 - safe identity views that exclude secret-like fields
+- public/shareable contact invite payloads under `src/contacts/`
+- trust warning copy for invite acceptance
 - no router probing
 - no SAM, proxy, or I2PTunnel probing
 - no private key generation or storage
+- no contact directory or contact graph sync
 - no I2P transport
 - no UI
 - no Supabase or cloud sync
