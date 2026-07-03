@@ -30,17 +30,19 @@ npm test
 
 ## GitHub Workflow Coverage
 
-`.github/workflows/validation.yml` runs `.\scripts\local-release-verify.ps1` on:
+`.github/workflows/validation.yml` runs package validation and `.\scripts\local-release-verify.ps1` on:
 
 - `push`
 - `pull_request`
+- `workflow_dispatch`
 
 `.github/workflows/release-claims.yml` runs `.\scripts\check-release-claims.ps1` on:
 
 - `push`
 - `pull_request`
+- `workflow_dispatch`
 
-Both workflows use `windows-latest` and PowerShell to match the primary development host.
+Both workflows use `ubuntu-latest`, `actions/checkout@v4`, and PowerShell Core (`pwsh`) for repository scripts. The validation workflow also uses `actions/setup-node@v4` with Node.js 22 and `npm ci` before running npm checks.
 
 ## Release Claim Gate
 

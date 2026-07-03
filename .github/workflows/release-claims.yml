@@ -2,18 +2,26 @@ name: Release Claims
 
 on:
   push:
+    branches:
+      - main
+      - "codex/**"
   pull_request:
+    branches:
+      - main
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  claims:
-    runs-on: windows-latest
+  release-claims:
+    name: Check release claims
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Check out repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run release claim guard
+      - name: Check release claims
         shell: pwsh
-        run: .\scripts\check-release-claims.ps1
+        run: ./scripts/check-release-claims.ps1
