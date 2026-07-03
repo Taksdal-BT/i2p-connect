@@ -1,0 +1,79 @@
+# Validation
+
+I2P Connect uses local and GitHub validation to keep release-facing claims grounded in implementation, tests, and documentation.
+
+## Local Validation
+
+Run the full local gate before opening a pull request:
+
+```powershell
+.\scripts\local-release-verify.ps1
+```
+
+The local release verification currently checks:
+
+- `git diff --check`
+- release claim guardrails through `scripts/check-release-claims.ps1`
+- required foundation files
+- onboarding mission JSON validity
+- `npm run check` when `package.json` exists
+- `npm run build` when `package.json` exists
+- `npm test` when `package.json` exists
+
+For TypeScript changes, it is also useful to run the npm commands directly while iterating:
+
+```powershell
+npm run check
+npm run build
+npm test
+```
+
+## GitHub Workflow Coverage
+
+`.github/workflows/validation.yml` runs `.\scripts\local-release-verify.ps1` on:
+
+- `push`
+- `pull_request`
+
+`.github/workflows/release-claims.yml` runs `.\scripts\check-release-claims.ps1` on:
+
+- `push`
+- `pull_request`
+
+Both workflows use `windows-latest` and PowerShell to match the primary development host.
+
+## Release Claim Gate
+
+Run the release claim guard directly when changing README, docs, product copy, issue templates, prompts, or release notes:
+
+```powershell
+.\scripts\check-release-claims.ps1
+```
+
+The guard rejects unsupported release-facing wording unless the same line clearly limits the claim with language such as `not promised`, `unsupported`, `future`, `experimental`, `unless implemented`, or `must not claim`.
+
+## Required PR Evidence
+
+Every PR should state:
+
+- validation commands run
+- pass/fail result for each command
+- changed files
+- security and OpSec notes
+- known limitations
+- next PR-sized task
+
+Do not report validation as passing unless the command was actually run.
+
+## Hard Stop Conditions
+
+Stop and request review if a change introduces or suggests:
+
+- public exposure of I2P router/admin/control ports
+- secrets, API keys, service role keys, private keys, or router credentials
+- private I2P destinations
+- private messages or plaintext message bodies in logs
+- raw router logs
+- contact graph sync
+- Supabase or cloud storage of sensitive I2P data
+- unsupported anonymity, encryption, delivery, video, SASE, or zero-trust claims
