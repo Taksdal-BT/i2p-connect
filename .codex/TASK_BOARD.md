@@ -2,7 +2,6 @@
 
 ## Ready
 
-- 07 Supabase extension plan
 - 08 GitHub release hardening
 
 ## In Progress
@@ -19,6 +18,7 @@
 - 04 identity model: local metadata, validation, safe serialization, and secret redaction tests.
 - 05 contact invite flow: versioned public invite payload, safe export, trust warnings, and validation tests.
 - 06 private message model: local-only message fields, validation, transitions, redacted views, and tests.
+- 07 Supabase extension plan: optional non-sensitive tables, RLS, secret rules, rollback, and advisor checklist.
 
 ## Rules
 

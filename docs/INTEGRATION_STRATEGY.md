@@ -24,6 +24,8 @@ These states may become release-facing only after implementation and tests exist
 
 Supabase is optional and non-sensitive only. See `docs/SUPABASE_BOUNDARY.md`.
 
+The optional Supabase extension plan is documented in `docs/SUPABASE_EXTENSION_PLAN.md`. It is a planning document only; no Supabase runtime integration exists yet.
+
 ## Future Host Apps
 
 Host apps should consume I2P Connect through small documented modules or APIs after runtime code exists. Host apps must preserve local-first storage, sanitized diagnostics, and measured release claims.

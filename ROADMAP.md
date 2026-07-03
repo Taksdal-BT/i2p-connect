@@ -93,6 +93,8 @@ Deliverables:
 
 ## Phase 6: Optional Non-Sensitive Integrations
 
+Status: planned.
+
 Goal: add optional cloud-backed metadata only where safe.
 
 Allowed examples:
@@ -105,3 +107,5 @@ Allowed examples:
 - education/workshop metadata
 
 Forbidden examples are listed in `docs/SUPABASE_BOUNDARY.md`.
+
+The optional Supabase extension plan is documented in `docs/SUPABASE_EXTENSION_PLAN.md`. No Supabase project, live migrations, policies, functions, seed data, credentials, or runtime integration exist yet.

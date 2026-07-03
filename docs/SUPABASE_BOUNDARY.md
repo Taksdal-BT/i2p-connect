@@ -38,3 +38,5 @@ If Supabase is introduced, the PR must include:
 - validation that sensitive data classes are excluded
 
 Supabase must never become required for core local communication.
+
+See `docs/SUPABASE_EXTENSION_PLAN.md` for the optional non-sensitive extension plan. The plan does not create a project, migrations, policies, functions, seed data, credentials, or live integration.
