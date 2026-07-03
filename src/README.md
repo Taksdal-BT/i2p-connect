@@ -10,8 +10,11 @@ Current scope:
 - safe diagnostic messages
 - advanced diagnostic copy
 - redaction utility for future diagnostics
+- local identity metadata under `src/identity/`
+- safe identity views that exclude secret-like fields
 - no router probing
 - no SAM, proxy, or I2PTunnel probing
+- no private key generation or storage
 - no I2P transport
 - no UI
 - no Supabase or cloud sync

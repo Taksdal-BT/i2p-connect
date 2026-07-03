@@ -4,9 +4,9 @@ This file defines security boundaries for the greenfield foundation.
 
 ## Current State
 
-The repository now includes a minimal TypeScript local status model. It maps supplied local status values to beginner-friendly copy, severity, and safe diagnostics.
+The repository now includes a minimal TypeScript local status model and a local-first identity model. Status code maps supplied local status values to beginner-friendly copy, severity, and safe diagnostics. Identity code creates and validates local profile metadata only.
 
-The current runtime code does not probe ports, open network connections, connect to SAM, inspect I2PTunnel, access the router console, send messages, store identity material, or sync data externally.
+The current runtime code does not probe ports, open network connections, connect to SAM, inspect I2PTunnel, access the router console, send messages, generate private keys, store private key material, or sync data externally.
 
 ## Sensitive Data
 
@@ -28,6 +28,10 @@ Treat the following as sensitive:
 ## Storage Boundary
 
 Sensitive communication data stays local by default. Cloud services must not store private I2P keys, private destinations, private messages, router logs, or contact graphs.
+
+The current identity model stores only local profile metadata: `localProfileId`, `displayName`, `publicContactId`, timestamps, and backup warning state. It does not create or store private I2P keys, private destinations, invite secrets, contact graphs, or transport credentials.
+
+Safe identity serialization must exclude secret-like fields and mark that no private key is stored, no cloud sync happened, and no real I2P identity has been created.
 
 ## Network Boundary
 

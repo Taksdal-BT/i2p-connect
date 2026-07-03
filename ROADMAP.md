@@ -53,15 +53,17 @@ Deliverables:
 
 ## Phase 3: Identity And Contacts
 
+Status: in progress.
+
 Goal: create local identity and verified invite foundations.
 
 Deliverables:
 
-- local identity model
-- local persistence
+- local identity metadata model: initial implementation added
+- local persistence: not implemented yet
 - contact invite format
 - verification UX
-- backup/export warnings
+- backup/export warnings: warning state modeled, UI not implemented
 
 ## Phase 4: Private Message MVP
 

@@ -1,6 +1,6 @@
 # Architecture
 
-I2P Connect currently contains foundation documentation and a minimal TypeScript local status model. The runtime code is pure local mapping logic only; it does not probe routers, open network connections, connect to SAM, inspect I2PTunnel, send messages, add UI, or integrate with cloud services.
+I2P Connect currently contains foundation documentation, a minimal TypeScript local status model, and a local-first identity metadata model. The runtime code is pure local domain logic only; it does not probe routers, open network connections, connect to SAM, inspect I2PTunnel, generate private keys, send messages, add UI, or integrate with cloud services.
 
 ## Architecture Goals
 
@@ -25,9 +25,10 @@ I2P Connect currently contains foundation documentation and a minimal TypeScript
    - Reports measured states such as "router reachable" or "SAM session ready" only after implementation.
 
 3. Local identity model
-   - Stores identity material locally.
-   - Supports backup/export only with explicit warnings.
-   - Does not upload private keys or private destinations.
+   - Currently creates and validates local profile metadata only.
+   - Tracks backup warning acknowledgement.
+   - Safe views explicitly exclude secret-like fields.
+   - Does not create, store, or upload private keys or private destinations.
 
 4. Contact and invite layer
    - Supports verified contact setup.
