@@ -20,6 +20,8 @@ The local release verification currently checks:
 - `npm run build` when `package.json` exists
 - `npm test` when `package.json` exists
 
+The npm test suite now includes route policy validation tests that enforce fail-closed policy coverage for sensitive routes in the route registry contract layer.
+
 For TypeScript changes, it is also useful to run the npm commands directly while iterating:
 
 ```powershell

@@ -12,6 +12,8 @@ This register records what I2P Connect may and must not claim in release-facing 
 | Identity model | The code creates and validates local profile metadata only. It does not create private keys or real I2P identities. | `src/identity/` and `tests/identity/`. |
 | Contact invites | The code creates versioned public/shareable invite payloads with trust warnings. It does not include private keys, private destinations, router metadata, or contact graphs. | `src/contacts/` and `tests/contacts/`. |
 | Message model | The code models local message fields, local status transitions, validation, and redacted views. It does not send messages, does not implement real encryption, does not confirm delivery, and does not claim full E2EE. | `src/messages/` and `tests/messages/`. |
+| Route policy contracts | The code defines explicit route security policy contracts, a fail-closed startup policy guard, and a route security matrix builder for future endpoint layers. It does not implement active HTTP/WebSocket/IPC handlers yet. | `src/security/` and `tests/security/`. |
+| Local route registry | The code defines a local route metadata registry for future endpoint implementation and startup policy validation. It does not start listeners or expose network services in this phase. | `src/server/routeDefinitions.ts` and `tests/security/startupPolicyGuard.test.ts`. |
 | Supabase | Supabase is optional and non-sensitive only. No live Supabase integration exists. | `docs/SUPABASE_BOUNDARY.md` and `docs/SUPABASE_EXTENSION_PLAN.md`. |
 
 ## Forbidden Or Unsupported Claims

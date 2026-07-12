@@ -16,6 +16,8 @@ Current scope:
 - trust warning copy for invite acceptance
 - local-only private message domain model under `src/messages/`
 - redacted message views that omit payload placeholders
+- route security policy contracts and fail-closed startup guard under `src/security/`
+- local route definition registry for future endpoint layers under `src/server/`
 - no router probing
 - no SAM, proxy, or I2PTunnel probing
 - no private key generation or storage

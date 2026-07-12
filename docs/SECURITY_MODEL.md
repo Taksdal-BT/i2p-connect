@@ -4,9 +4,11 @@ This file defines security boundaries for the greenfield foundation.
 
 ## Current State
 
-The repository now includes a minimal TypeScript local status model, a local-first identity model, a versioned contact invite model, and a local-only private message domain model. Status code maps supplied local status values to beginner-friendly copy, severity, and safe diagnostics. Identity code creates and validates local profile metadata only. Contact invite code exports public/shareable contact metadata only. Message code models local message state only.
+The repository now includes a minimal TypeScript local status model, a local-first identity model, a versioned contact invite model, a local-only private message domain model, and a fail-closed route policy contract layer for future server routes. Status code maps supplied local status values to beginner-friendly copy, severity, and safe diagnostics. Identity code creates and validates local profile metadata only. Contact invite code exports public/shareable contact metadata only. Message code models local message state only.
 
 The current runtime code does not probe ports, open network connections, connect to SAM, inspect I2PTunnel, access the router console, send messages, implement real encryption, generate private keys, store private key material, create contact directories, sync contact graphs, store messages in Supabase, or sync data externally.
+
+The route policy layer defines explicit security decisions and a startup guard for future endpoints. The local route registration layer now provides placeholder route metadata for future endpoint implementation, but it does not provide active HTTP, WebSocket, IPC, or local admin handlers yet.
 
 ## Sensitive Data
 

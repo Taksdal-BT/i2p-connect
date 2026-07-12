@@ -1,6 +1,6 @@
 # Architecture
 
-I2P Connect currently contains foundation documentation, a minimal TypeScript local status model, a local-first identity metadata model, a public/shareable contact invite model, and a local-only private message domain model. The runtime code is pure local domain logic only; it does not probe routers, open network connections, connect to SAM, inspect I2PTunnel, generate private keys, implement real encryption, send messages, create contact directories, add UI, or integrate with cloud services.
+I2P Connect currently contains foundation documentation, a minimal TypeScript local status model, a local-first identity metadata model, a public/shareable contact invite model, a local-only private message domain model, and a fail-closed route policy contract layer for future server endpoints. The runtime code is pure local domain logic only; it does not probe routers, open network connections, connect to SAM, inspect I2PTunnel, generate private keys, implement real encryption, send messages, create contact directories, add UI, or integrate with cloud services.
 
 ## Architecture Goals
 
@@ -51,6 +51,17 @@ I2P Connect currently contains foundation documentation, a minimal TypeScript lo
 7. Optional integration layer
    - May handle public docs, release dashboards, onboarding catalogs, community resources, or sanitized opt-in metrics.
    - Must follow `docs/SUPABASE_BOUNDARY.md`.
+
+8. Route policy contract layer
+   - Defines explicit route security decisions for authentication, CSRF, authorization scopes, input validation, rate limits, and audit behavior.
+   - Includes fail-closed startup guardrails for sensitive route policy coverage.
+   - Provides a route security matrix builder from a single route registry source.
+   - Does not expose network services and does not implement HTTP handlers in this phase.
+
+9. Local route registration layer
+   - Defines placeholder local route metadata for future endpoint implementation.
+   - Keeps route policy declarations close to route purpose and path declarations.
+   - Does not bind sockets and does not start a network server in this phase.
 
 ## Release Modes
 

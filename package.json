@@ -9,7 +9,7 @@
   "scripts": {
     "check": "tsc --noEmit",
     "build": "tsc --outDir dist",
-    "test": "tsc --outDir dist && node dist/tests/status/statusMapper.test.js && node dist/tests/identity/identity.test.js && node dist/tests/contacts/contactInvite.test.js && node dist/tests/messages/privateMessage.test.js"
+    "test": "tsc --outDir dist && node dist/tests/status/statusMapper.test.js && node dist/tests/identity/identity.test.js && node dist/tests/contacts/contactInvite.test.js && node dist/tests/messages/privateMessage.test.js && node dist/tests/security/routePolicy.test.js && node dist/tests/security/startupPolicyGuard.test.js && node dist/tests/security/matrix.test.js && node dist/tests/security/csrf.test.js && node dist/tests/server/binder.test.js"
   },
   "devDependencies": {
     "typescript": "^6.0.3"
