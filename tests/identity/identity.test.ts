@@ -1,5 +1,9 @@
 import { createLocalIdentity } from '../../src/identity/identityFactory';
 import {
+  assertLocalIdentityPersistenceContract,
+  type LocalIdentityPersistenceContract
+} from '../../src/identity/persistence';
+import {
   validateDisplayName,
   validateLocalIdentity,
   validatePublicContactId
@@ -98,3 +102,50 @@ assertEqual(stripped.displayName, 'Jarle token=[REDACTED]', 'safe object should 
 
 const redacted = redactIdentityText('service role key: abc123');
 assert(!redacted.includes('abc123'), 'identity redaction should remove service role key values');
+
+const persistedByProfileId = new Map<string, ReturnType<typeof createLocalIdentity>>();
+
+const persistenceDouble: LocalIdentityPersistenceContract = {
+  save(entry) {
+    persistedByProfileId.set(entry.localProfileId, entry);
+    return entry;
+  },
+  getByLocalProfileId(localProfileId) {
+    return persistedByProfileId.get(localProfileId);
+  },
+  list() {
+    return Array.from(persistedByProfileId.values());
+  },
+  deleteByLocalProfileId(localProfileId) {
+    return persistedByProfileId.delete(localProfileId);
+  }
+};
+
+assertLocalIdentityPersistenceContract(persistenceDouble);
+
+const persistedIdentity = persistenceDouble.save(identity);
+assertEqual(
+  persistedIdentity.localProfileId,
+  identity.localProfileId,
+  'persistence contract save should return saved identity'
+);
+
+const loadedIdentity = persistenceDouble.getByLocalProfileId(identity.localProfileId);
+assert(loadedIdentity !== undefined, 'persistence contract should return saved identity by profile id');
+assertEqual(
+  loadedIdentity?.displayName,
+  identity.displayName,
+  'persistence contract should preserve display name'
+);
+
+const listedIdentities = persistenceDouble.list();
+assertEqual(listedIdentities.length, 1, 'persistence contract list should include saved identity');
+
+const deleted = persistenceDouble.deleteByLocalProfileId(identity.localProfileId);
+assertEqual(deleted, true, 'persistence contract should delete existing identity');
+assertEqual(persistenceDouble.list().length, 0, 'persistence contract list should be empty after delete');
+
+assertThrows(
+  () => assertLocalIdentityPersistenceContract({ save: () => identity }),
+  'missing persistence methods should fail contract assertion'
+);

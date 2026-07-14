@@ -4,6 +4,14 @@ I2P Connect uses local and GitHub validation to keep release-facing claims groun
 
 ## Local Validation
 
+Local TypeScript validation requires Node.js 22 or newer with `npm` available on `PATH`.
+
+Install dependencies before running the full gate:
+
+```powershell
+npm ci
+```
+
 Run the full local gate before opening a pull request:
 
 ```powershell
@@ -19,6 +27,8 @@ The local release verification currently checks:
 - `npm run check` when `package.json` exists
 - `npm run build` when `package.json` exists
 - `npm test` when `package.json` exists
+
+If `node` or `npm` is not available, the script now stops early with an actionable prerequisite message instead of failing later during npm execution.
 
 The npm test suite now includes route policy validation tests that enforce fail-closed policy coverage for sensitive routes in the route registry contract layer.
 

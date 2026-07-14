@@ -3,13 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "description": "Local-first I2P Connect domain logic.",
+  "engines": {
+    "node": ">=22.0.0 <23.0.0"
+  },
   "type": "commonjs",
   "main": "dist/src/status/statusMapper.js",
   "types": "dist/src/status/statusMapper.d.ts",
   "scripts": {
     "check": "tsc --noEmit",
     "build": "tsc --outDir dist",
-    "test": "tsc --outDir dist && node dist/tests/status/statusMapper.test.js && node dist/tests/identity/identity.test.js && node dist/tests/contacts/contactInvite.test.js && node dist/tests/messages/privateMessage.test.js && node dist/tests/security/routePolicy.test.js && node dist/tests/security/startupPolicyGuard.test.js && node dist/tests/security/matrix.test.js && node dist/tests/security/csrf.test.js && node dist/tests/server/binder.test.js"
+    "test": "tsc --outDir dist && node dist/tests/status/statusMapper.test.js && node dist/tests/status/onboarding.test.js && node dist/tests/identity/identity.test.js && node dist/tests/contacts/contactInvite.test.js && node dist/tests/messages/privateMessage.test.js && node dist/tests/messages/queue.test.js && node dist/tests/transport/worker.test.js && node dist/tests/security/routePolicy.test.js && node dist/tests/security/startupPolicyGuard.test.js && node dist/tests/security/matrix.test.js && node dist/tests/security/csrf.test.js && node dist/tests/server/binder.test.js",
+    "package:windows": "npx --no-install electron-builder --config build/win-config.json --win nsis",
+    "build:windows": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./scripts/build-windows.ps1",
+    "package:linux": "npx --no-install electron-builder --config build/linux-config.json --linux",
+    "build:linux": "bash ./scripts/build-linux.sh"
   },
   "devDependencies": {
     "typescript": "^6.0.3"

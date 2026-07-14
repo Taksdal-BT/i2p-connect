@@ -5,6 +5,10 @@ This directory contains the first TypeScript runtime skeleton for I2P Connect.
 Current scope:
 
 - pure local status mapping under `src/status/`
+- localhost-only router reachability contract mapping under `src/status/`
+- localhost-only SAM readiness contract mapping under `src/status/`
+- localhost-only selected transport readiness contract mapping under `src/status/`
+- aggregate local readiness composition across supplied loopback router, SAM, and selected transport inputs
 - beginner-friendly labels
 - severity and summary copy
 - safe diagnostic messages

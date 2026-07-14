@@ -1,0 +1,92 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish ${{ matrix.os }} artifacts
+    runs-on: ${{ matrix.os }}
+    env:
+      WIN_CSC_LINK: ${{ secrets['WIN_CSC_LINK'] }}
+      WIN_CSC_KEY_PASSWORD: ${{ secrets['WIN_CSC_KEY_PASSWORD'] }}
+      GPG_PRIVATE_KEY: ${{ secrets['GPG_PRIVATE_KEY'] }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-latest
+          - ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.17.0"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set deterministic build timestamp
+        shell: bash
+        run: |
+          SOURCE_DATE_EPOCH="$(git log -1 --pretty=%ct)"
+          echo "SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH" >> "$GITHUB_ENV"
+
+      - name: Type check
+        run: npm run check
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Prepare Windows signing secrets
+        if: runner.os == 'Windows' && env.WIN_CSC_LINK != '' && env.WIN_CSC_KEY_PASSWORD != ''
+        shell: bash
+        run: |
+          echo "Windows signing secrets detected."
+
+      - name: Build Windows artifacts
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./scripts/build-windows.ps1
+
+      - name: Build Linux artifacts
+        if: runner.os == 'Linux'
+        shell: bash
+        run: bash ./scripts/build-linux.sh
+
+      - name: Import GPG private key
+        if: runner.os == 'Linux' && env.GPG_PRIVATE_KEY != ''
+        shell: bash
+        run: |
+          printf '%s' "$GPG_PRIVATE_KEY" | gpg --batch --import
+
+      - name: Generate detached Linux checksum signature
+        if: runner.os == 'Linux' && env.GPG_PRIVATE_KEY != ''
+        shell: bash
+        run: |
+          gpg --batch --yes --armor --detach-sign --output dist/linux/SHA256SUMS.txt.asc dist/linux/SHA256SUMS.txt
+
+      - name: Upload release artifacts
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/win/**
+            dist/linux/**
+          fail_on_unmatched_files: false

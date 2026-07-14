@@ -1,6 +1,6 @@
 # Architecture
 
-I2P Connect currently contains foundation documentation, a minimal TypeScript local status model, a local-first identity metadata model, a public/shareable contact invite model, a local-only private message domain model, and a fail-closed route policy contract layer for future server endpoints. The runtime code is pure local domain logic only; it does not probe routers, open network connections, connect to SAM, inspect I2PTunnel, generate private keys, implement real encryption, send messages, create contact directories, add UI, or integrate with cloud services.
+I2P Connect currently contains foundation documentation, a minimal TypeScript local status model, a localhost-only router, SAM, and selected transport readiness contract mapper, a local-first identity metadata model, a public/shareable contact invite model, a local-only private message domain model, and a fail-closed route policy contract layer for future server endpoints. The runtime code is pure local domain logic only; it does not probe routers, open network connections, connect to SAM, inspect I2PTunnel, generate private keys, implement real encryption, send messages, create contact directories, add UI, or integrate with cloud services.
 
 ## Architecture Goals
 
@@ -18,11 +18,13 @@ I2P Connect currently contains foundation documentation, a minimal TypeScript lo
    - Does not depend on cloud services for core communication.
 
 2. Local I2P status adapter
-   - Currently maps supplied local status values to beginner-friendly copy, severity, and safe diagnostics.
+   - Currently maps supplied local status values plus supplied localhost-only router reachability, SAM readiness, and selected transport readiness inputs to beginner-friendly copy, severity, and safe diagnostics.
+   - Includes an aggregate local readiness composer that combines supplied router, SAM, and selected transport loopback outcomes into one fail-closed status.
+   - Current router, SAM, and selected transport readiness mapping is a pure contract only and does not open sockets or probe ports.
    - Future work may detect whether a local I2P router is reachable.
    - Future router integration must use localhost-bound defaults.
    - Never exposes router/admin/control ports publicly.
-   - Reports measured states such as "router reachable" or "SAM session ready" only after implementation.
+   - Reports modeled router reachable, router unreachable, SAM session readiness, and selected transport readiness states from supplied loopback inputs; direct measurement still requires future implementation.
 
 3. Local identity model
    - Currently creates and validates local profile metadata only.

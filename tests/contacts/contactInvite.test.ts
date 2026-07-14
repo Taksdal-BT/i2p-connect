@@ -1,4 +1,5 @@
 import { createContactInvite } from '../../src/contacts/inviteFactory';
+import { evaluateInviteVerificationDecision } from '../../src/contacts/inviteDecision';
 import { parseContactInvite, validateContactInvitePayload } from '../../src/contacts/inviteValidation';
 import {
   exportContactInvite,
@@ -139,3 +140,38 @@ assert(
   safeView.trustWarnings.includes(CONTACT_INVITE_TRUST_WARNINGS[1]),
   'safe view should include real-world identity warning'
 );
+
+const verificationRequiresAck = evaluateInviteVerificationDecision();
+assertEqual(verificationRequiresAck.allowed, false, 'verification should block without acknowledgements');
+assertEqual(
+  verificationRequiresAck.code,
+  'verification_ack_required',
+  'verification should require acknowledgements when none are supplied'
+);
+assertEqual(
+  verificationRequiresAck.missingWarnings.length,
+  CONTACT_INVITE_TRUST_WARNINGS.length,
+  'verification should mark all warnings missing with no acknowledgements'
+);
+
+const verificationMissingAck = evaluateInviteVerificationDecision({
+  acknowledgedWarnings: [CONTACT_INVITE_TRUST_WARNINGS[0]]
+});
+assertEqual(verificationMissingAck.allowed, false, 'verification should block when acknowledgements are partial');
+assertEqual(
+  verificationMissingAck.code,
+  'verification_missing_ack',
+  'verification should flag missing acknowledgements for partial acknowledgement'
+);
+assertEqual(
+  verificationMissingAck.missingWarnings.length,
+  1,
+  'verification should report a single missing warning with one acknowledgement'
+);
+
+const verificationReady = evaluateInviteVerificationDecision({
+  acknowledgedWarnings: CONTACT_INVITE_TRUST_WARNINGS
+});
+assertEqual(verificationReady.allowed, true, 'verification should allow when all warnings are acknowledged');
+assertEqual(verificationReady.code, 'verification_ready', 'verification should report ready with full acknowledgement');
+assertEqual(verificationReady.missingWarnings.length, 0, 'verification should have no missing warnings when ready');

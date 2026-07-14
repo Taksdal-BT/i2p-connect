@@ -6,8 +6,19 @@ This repository is intended to work well with Codex on a Windows PowerShell host
 
 - Shell: PowerShell
 - Validation entrypoint: `.\scripts\local-release-verify.ps1`
-- Runtime code: not present yet
-- Dependencies: none in the foundation phase
+- Runtime code: local TypeScript domain logic only
+- Toolchain: Node.js 22 or newer with `npm` on `PATH` when `package.json` exists
+- Dependencies: install with `npm ci`
+
+## Local Setup
+
+Before running validation for the current TypeScript package:
+
+```powershell
+npm ci
+```
+
+If `node` or `npm` is missing, install Node.js 22 or newer, reopen the shell, and rerun the validation command.
 
 ## Agent Flow
 

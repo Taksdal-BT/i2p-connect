@@ -4,6 +4,15 @@ export const SAFE_DIAGNOSTIC_MESSAGES: Record<I2pStatus, string> = {
   ready: 'The supplied local status is ready. This package does not probe the router yet.',
   starting: 'The supplied local status is starting. Wait for local services to finish.',
   router_not_found: 'No local router status is available. Check local I2P setup before continuing.',
+  router_reachable: 'A supplied localhost-only router result says the router is reachable. This mapper did not open a socket.',
+  router_unreachable: 'A supplied localhost-only router result says the router is unreachable. Check local startup and loopback settings.',
+  router_misconfigured: 'The supplied router endpoint is not a safe localhost-only configuration. Review the local host and port before continuing.',
+  sam_session_ready: 'A supplied localhost-only SAM result says the session is ready. This mapper did not open a SAM connection.',
+  sam_session_unavailable: 'A supplied localhost-only SAM result says the session is unavailable. Check local SAM startup and configuration.',
+  sam_misconfigured: 'The supplied SAM endpoint is not a safe localhost-only configuration. Review the local host and port before continuing.',
+  transport_ready: 'A supplied localhost-only selected transport result says the transport is ready. This mapper did not open a transport connection.',
+  transport_unavailable: 'A supplied localhost-only selected transport result says the transport is unavailable. Check local transport startup and configuration.',
+  transport_misconfigured: 'The supplied selected transport endpoint is not a safe localhost-only configuration. Review the local host and port before continuing.',
   proxy_unavailable: 'The local proxy is not available in the supplied status. Check local proxy settings.',
   sam_unavailable: 'SAM is not available in the supplied status. Check local SAM settings.',
   tunnel_unknown: 'Tunnel state is unknown in the supplied status. Review local setup before relying on it.',
@@ -35,6 +44,78 @@ export const ADVANCED_DIAGNOSTICS: Record<I2pStatus | 'unknown', I2pAdvancedDiag
       code: 'status.router.not-found',
       title: 'Router status missing',
       detail: 'No local router status was supplied to the mapper. This is not a network probe result.',
+      safeToShow: true
+    }
+  ],
+  router_reachable: [
+    {
+      code: 'status.router.reachable.loopback',
+      title: 'Loopback router reachable',
+      detail: 'A supplied localhost-only router reachability result maps to reachable. This mapper did not open a router connection.',
+      safeToShow: true
+    }
+  ],
+  router_unreachable: [
+    {
+      code: 'status.router.unreachable.loopback',
+      title: 'Loopback router unreachable',
+      detail: 'A supplied localhost-only router reachability result maps to unreachable. Check that the local router is running and bound as expected.',
+      safeToShow: true
+    }
+  ],
+  router_misconfigured: [
+    {
+      code: 'status.router.misconfigured.loopback',
+      title: 'Loopback router configuration required',
+      detail: 'The supplied router endpoint is not a valid localhost-only host and port combination. Public or invalid router endpoints must not be used by default.',
+      safeToShow: true
+    }
+  ],
+  sam_session_ready: [
+    {
+      code: 'status.sam.session-ready.loopback',
+      title: 'Loopback SAM session ready',
+      detail: 'A supplied localhost-only SAM readiness result maps to session ready. This mapper did not open a SAM socket.',
+      safeToShow: true
+    }
+  ],
+  sam_session_unavailable: [
+    {
+      code: 'status.sam.session-unavailable.loopback',
+      title: 'Loopback SAM session unavailable',
+      detail: 'A supplied localhost-only SAM readiness result maps to session unavailable. Check that SAM is enabled locally and ready.',
+      safeToShow: true
+    }
+  ],
+  sam_misconfigured: [
+    {
+      code: 'status.sam.misconfigured.loopback',
+      title: 'Loopback SAM configuration required',
+      detail: 'The supplied SAM endpoint is not a valid localhost-only host and port combination. Public or invalid SAM endpoints must not be used by default.',
+      safeToShow: true
+    }
+  ],
+  transport_ready: [
+    {
+      code: 'status.transport.ready.loopback',
+      title: 'Loopback selected transport ready',
+      detail: 'A supplied localhost-only selected transport readiness result maps to ready. This mapper did not open a transport socket.',
+      safeToShow: true
+    }
+  ],
+  transport_unavailable: [
+    {
+      code: 'status.transport.unavailable.loopback',
+      title: 'Loopback selected transport unavailable',
+      detail: 'A supplied localhost-only selected transport readiness result maps to unavailable. Check that the selected local transport is enabled and ready.',
+      safeToShow: true
+    }
+  ],
+  transport_misconfigured: [
+    {
+      code: 'status.transport.misconfigured.loopback',
+      title: 'Loopback selected transport configuration required',
+      detail: 'The supplied selected transport endpoint is not a valid localhost-only host and port combination. Public or invalid transport endpoints must not be used by default.',
       safeToShow: true
     }
   ],

@@ -4,6 +4,19 @@ import { MESSAGE_STATUS_VALUES, type MessageValidationIssue, type MessageValidat
 const MESSAGE_ID_PATTERN = /^msg_[a-z0-9_-]{8,80}$/;
 const CONVERSATION_ID_PATTERN = /^conv_[a-z0-9_-]{8,80}$/;
 const PLACEHOLDER_PATTERN = /^placeholder_[a-z0-9_-]{8,120}$/;
+const NON_CRYPTO_PLACEHOLDER_FORBIDDEN_TOKENS = [
+  'aes',
+  'rsa',
+  'gcm',
+  'cipher',
+  'chacha',
+  'ecdh',
+  'x25519',
+  'pgp',
+  'openssl',
+  'jwt',
+  'encrypted'
+] as const;
 
 export function isMessageStatus(value: string): boolean {
   return MESSAGE_STATUS_VALUES.includes(value as (typeof MESSAGE_STATUS_VALUES)[number]);
@@ -38,12 +51,29 @@ export function validateConversationId(conversationId: string): MessageValidatio
 }
 
 export function validateEncryptedPayloadPlaceholder(value: string): MessageValidationIssue[] {
+  const lowerValue = value.toLowerCase();
+
   if (!PLACEHOLDER_PATTERN.test(value)) {
     return [
       {
         field: 'encryptedPayloadPlaceholder',
         code: 'payload_placeholder.invalid',
         message: 'Payload placeholder must be a local placeholder id, not message contents.'
+      }
+    ];
+  }
+
+  const forbiddenToken = NON_CRYPTO_PLACEHOLDER_FORBIDDEN_TOKENS.find((token) =>
+    lowerValue.includes(token)
+  );
+
+  if (forbiddenToken !== undefined) {
+    return [
+      {
+        field: 'encryptedPayloadPlaceholder',
+        code: 'payload_placeholder.crypto_claim_forbidden',
+        message:
+          'Payload placeholder must remain non-cryptographic and must not imply real encryption algorithms.'
       }
     ];
   }

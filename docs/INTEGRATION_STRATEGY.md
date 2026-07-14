@@ -6,6 +6,8 @@ I2P Connect starts as a clean product foundation. Integrations come after the lo
 
 Future runtime code should integrate with a local I2P router through localhost-bound APIs or transports. Router/admin/control ports must not be exposed publicly.
 
+The current TypeScript status layer includes pure localhost-only contracts that map supplied loopback router, SAM, and selected transport outcomes to safe status copy. It does not open sockets or perform active probing.
+
 Initial measured states may include:
 
 - router not configured

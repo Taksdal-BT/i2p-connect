@@ -58,3 +58,20 @@ export type ContactInviteParseResult =
       ok: false;
       issues: ContactInviteValidationIssue[];
     };
+
+export type InviteVerificationDecisionCode =
+  | 'verification_ready'
+  | 'verification_ack_required'
+  | 'verification_missing_ack';
+
+export interface InviteVerificationDecision {
+  allowed: boolean;
+  code: InviteVerificationDecisionCode;
+  missingWarnings: readonly string[];
+  acknowledgedWarnings: readonly string[];
+  message: string;
+}
+
+export interface InviteVerificationDecisionInput {
+  acknowledgedWarnings?: readonly string[];
+}

@@ -5,6 +5,16 @@ $RepoRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $ClaimCheck = Join-Path $PSScriptRoot 'check-release-claims.ps1'
 $OnboardingMissions = Join-Path $RepoRoot 'product/onboarding_missions.json'
 $PackageJson = Join-Path $RepoRoot 'package.json'
+$WindowsBuildScript = Join-Path $PSScriptRoot 'build-windows.ps1'
+$LinuxBuildScript = Join-Path $PSScriptRoot 'build-linux.sh'
+
+function Test-CommandAvailable {
+    param(
+        [Parameter(Mandatory = $true)][string]$Name
+    )
+
+    return $null -ne (Get-Command -Name $Name -ErrorAction SilentlyContinue)
+}
 
 Push-Location $RepoRoot
 try {
@@ -93,6 +103,16 @@ catch {
 }
 
 if (Test-Path -LiteralPath $PackageJson -PathType Leaf) {
+    if (-not (Test-CommandAvailable -Name 'node')) {
+        Write-Host 'Node.js is required for local validation when package.json exists. Install Node.js 22 or newer, reopen the shell, and rerun .\scripts\local-release-verify.ps1.'
+        exit 1
+    }
+
+    if (-not (Test-CommandAvailable -Name 'npm')) {
+        Write-Host 'npm is required for local validation when package.json exists. Install the Node.js toolchain, reopen the shell, and rerun .\scripts\local-release-verify.ps1.'
+        exit 1
+    }
+
     Push-Location $RepoRoot
     try {
         $NpmValidationCommands = @(
@@ -113,6 +133,38 @@ if (Test-Path -LiteralPath $PackageJson -PathType Leaf) {
     finally {
         Pop-Location
     }
+
+    if ($IsLinux -and (Test-Path -LiteralPath $LinuxBuildScript -PathType Leaf)) {
+        Write-Host 'Running Linux packaging artifact verification'
+        if (-not (Test-CommandAvailable -Name 'bash')) {
+            Write-Host 'Linux packaging verification requires bash.'
+            exit 1
+        }
+
+        Push-Location $RepoRoot
+        try {
+            & bash './scripts/build-linux.sh'
+            if ($LASTEXITCODE -ne 0) {
+                exit $LASTEXITCODE
+            }
+        }
+        finally {
+            Pop-Location
+        }
+    }
+    elseif ($IsWindows -and (Test-Path -LiteralPath $WindowsBuildScript -PathType Leaf)) {
+        Write-Host 'Running Windows packaging artifact verification'
+        & $WindowsBuildScript
+        if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+        }
+    }
+    elseif ($IsWindows) {
+        Write-Host 'Linux packaging verification skipped on Windows host.'
+    }
+    elseif ($IsLinux) {
+        Write-Host 'Linux packaging verification skipped because scripts/build-linux.sh is missing.'
+    }
 }
 
 Write-Host 'git diff --check passed.'
@@ -120,5 +172,11 @@ Write-Host 'Required file check passed.'
 Write-Host 'Onboarding mission JSON validation passed.'
 if (Test-Path -LiteralPath $PackageJson -PathType Leaf) {
     Write-Host 'npm validation passed.'
+    if ($IsLinux -and (Test-Path -LiteralPath $LinuxBuildScript -PathType Leaf)) {
+        Write-Host 'Linux packaging artifact verification passed.'
+    }
+    elseif ($IsWindows -and (Test-Path -LiteralPath $WindowsBuildScript -PathType Leaf)) {
+        Write-Host 'Windows packaging artifact verification passed.'
+    }
 }
 Write-Host 'Local release verification passed.'

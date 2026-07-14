@@ -1,0 +1,59 @@
+name: Feature request
+description: Propose a scoped enhancement aligned with privacy and security boundaries
+labels:
+  - enhancement
+body:
+  - type: input
+    id: goal
+    attributes:
+      label: User goal
+      placeholder: What user problem does this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Proposed scope
+      placeholder: List exactly what is included.
+    validations:
+      required: true
+  - type: textarea
+    id: non_goals
+    attributes:
+      label: Explicit non-goals
+      placeholder: List what this proposal intentionally excludes.
+    validations:
+      required: true
+  - type: dropdown
+    id: sensitive_areas
+    attributes:
+      label: Sensitive impact area
+      options:
+        - None
+        - Identity
+        - Destinations
+        - Messages
+        - Router integration
+        - Logging or diagnostics
+        - Packaging and release
+        - Optional cloud metadata
+    validations:
+      required: true
+  - type: checkboxes
+    id: security_guardrails
+    attributes:
+      label: Security guardrails
+      options:
+        - label: This proposal does not expose ports publicly by default.
+          required: true
+        - label: This proposal does not store sensitive I2P data in cloud services.
+          required: true
+        - label: This proposal does not add unsupported anonymity or encryption claims.
+          required: true
+  - type: textarea
+    id: validation_plan
+    attributes:
+      label: Validation and test plan
+      placeholder: Include expected negative or security tests.
+    validations:
+      required: true

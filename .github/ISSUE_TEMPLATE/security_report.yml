@@ -1,0 +1,70 @@
+name: Security report
+description: Report a potential vulnerability privately and safely
+labels:
+  - security
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not post secrets, private destinations, credentials, private messages, raw router logs, or deanonymizing data.
+        Use GitHub Private Vulnerability Reporting when possible. If this issue is public, redact all sensitive details.
+  - type: checkboxes
+    id: private_channel_check
+    attributes:
+      label: Private disclosure confirmation
+      options:
+        - label: I understand that vulnerabilities should be reported through a private channel when possible.
+          required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Vulnerability summary
+      description: Describe the security issue in one paragraph.
+      placeholder: State what boundary appears to fail and why it matters.
+    validations:
+      required: true
+  - type: dropdown
+    id: impact_area
+    attributes:
+      label: Impact area
+      options:
+        - Route policy (auth, CSRF, scopes)
+        - Loopback and network exposure
+        - Sensitive logging or redaction
+        - Packaging and release artifacts
+        - Dependency or supply chain
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps (sanitized)
+      description: Provide minimal reproducible steps without secrets.
+      placeholder: |
+        1. Start from commit...
+        2. Call endpoint...
+        3. Observe unexpected behavior...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected fail-closed behavior
+      placeholder: Describe what should have happened under current policy.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence (redacted)
+      description: Include logs, stack traces, or screenshots with sensitive values removed.
+  - type: checkboxes
+    id: disclosure_safety
+    attributes:
+      label: Disclosure safety checklist
+      options:
+        - label: I have redacted private destinations, credentials, keys, and message data.
+          required: true
+        - label: I have not posted exploit details that materially increase active risk.
+          required: true

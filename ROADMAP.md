@@ -45,11 +45,13 @@ Goal: measure local I2P readiness.
 
 Deliverables:
 
-- router reachable check
-- SAM or selected transport readiness check
+- router reachable check: initial localhost-only contract mapping added
+- SAM or selected transport readiness check: initial localhost-only SAM contract mapping added
+- selected transport readiness check: initial localhost-only contract mapping added
+- aggregate local readiness composer: initial router-plus-SAM-plus-selected-transport composition added
 - localhost-only connection defaults
 - beginner setup states
-- tests for reachable, unreachable, and misconfigured states
+- tests for reachable, unreachable, and misconfigured states: initial contract tests added
 
 ## Phase 3: Identity And Contacts
 
@@ -60,9 +62,9 @@ Goal: create local identity and verified invite foundations.
 Deliverables:
 
 - local identity metadata model: initial implementation added
-- local persistence: not implemented yet
+- local persistence: interface contracts added, no backend implementation yet
 - contact invite format: initial versioned public payload added
-- verification UX: trust warning copy modeled, UI not implemented
+- verification UX: trust warning decision model and acknowledgement states added, UI not implemented
 - backup/export warnings: warning state modeled, UI not implemented
 
 ## Phase 4: Private Message MVP
@@ -73,9 +75,9 @@ Goal: send a first private message after storage, transport, and cryptographic b
 
 Deliverables:
 
-- message queue: local status transitions modeled, no transport yet
-- local message store: not implemented yet
-- app-layer envelope: placeholder only, no real encryption yet
+- message queue: outbox queue and worker state transitions modeled with DI-based SAM stream contract and timeouts, no real socket integration yet
+- local message store: interface contracts and test doubles added, no backend implementation yet
+- app-layer envelope: explicit non-cryptographic placeholder boundary checks added, no real encryption yet
 - sanitized logging tests: redacted message view tests added
 - delivery/readiness states: local states modeled, no delivery claim
 
@@ -120,3 +122,35 @@ Deliverables:
 - release-claim guardrails documented in `docs/CLAIMS_REGISTER.md`
 - validation process documented in `docs/VALIDATION.md`
 - PR checklist added to `CONTRIBUTING.md`
+
+## 10-Phase Execution Checklist
+
+Legend: ![Complete](https://img.shields.io/badge/Complete-2ea043) complete, ![In Progress](https://img.shields.io/badge/In%20Progress-f59e0b) in progress, ![Planned](https://img.shields.io/badge/Planned-2563eb) planned.
+
+| Phase | Status | Focus |
+| --- | --- | --- |
+| 1 | ![Complete](https://img.shields.io/badge/Complete-2ea043) | Repo foundation and doctrine |
+| 2 | ![In Progress](https://img.shields.io/badge/In%20Progress-f59e0b) | Local app skeleton completion |
+| 3 | ![In Progress](https://img.shields.io/badge/In%20Progress-f59e0b) | Local I2P status model completion |
+| 4 | ![Planned](https://img.shields.io/badge/Planned-2563eb) | Identity and contacts completion |
+| 5 | ![Planned](https://img.shields.io/badge/Planned-2563eb) | Private message MVP completion |
+| 6 | ![Planned](https://img.shields.io/badge/Planned-2563eb) | Audio message prototype completion |
+| 7 | ![Planned](https://img.shields.io/badge/Planned-2563eb) | Optional non-sensitive integrations |
+| 8 | ![Planned](https://img.shields.io/badge/Planned-2563eb) | Runtime security hardening and regression guardrails |
+| 9 | ![Planned](https://img.shields.io/badge/Planned-2563eb) | Host integration and local UX shell wiring |
+| 10 | ![Planned](https://img.shields.io/badge/Planned-2563eb) | Release candidate readiness and final claims review |
+
+## Near-Term Roadmap Queue
+
+Use this queue to execute the next PR-sized changes in order.
+
+1. Phase 2: Add a beginner-facing local readiness summary formatter for composed status outcomes.
+2. Phase 2: Add explicit typed status reasons for fail-closed router, SAM, and transport misconfiguration paths.
+3. Phase 3: Introduce local identity persistence interface contracts with no storage backend implementation.
+4. Phase 3: Add invite verification decision model for trust warnings and user acknowledgement states.
+5. Phase 4: Add local message store interface contracts and test doubles (no runtime transport).
+6. Phase 4: Add envelope boundary checks that keep placeholder encryption clearly non-cryptographic.
+7. Phase 5: Add audio note domain model and consent-state transitions with local-only constraints.
+8. Phase 6: Define optional integration metadata schemas that exclude sensitive classes by contract.
+9. Phase 8: Add regression tests for route policy coverage drift and fail-closed startup behavior.
+10. Phase 10: Add release-candidate claim evidence checklist tied to validation outputs and docs.

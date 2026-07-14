@@ -1,5 +1,9 @@
 import { createPrivateMessage } from '../../src/messages/messageFactory';
-import { validatePrivateMessage } from '../../src/messages/messageValidation';
+import {
+  assertLocalMessageStoreContract,
+  type LocalMessageStoreContract
+} from '../../src/messages/persistence';
+import { validateEncryptedPayloadPlaceholder, validatePrivateMessage } from '../../src/messages/messageValidation';
 import { canTransitionMessageStatus, transitionMessageStatus } from '../../src/messages/messageTransitions';
 import {
   redactMessageLogText,
@@ -88,6 +92,23 @@ assertThrows(
   'plaintext payload placeholder should throw'
 );
 
+assertThrows(
+  () =>
+    createPrivateMessage({
+      conversationId: 'conv_private01',
+      senderPublicId: 'contact_sender01',
+      recipientPublicId: 'contact_recipient01',
+      encryptedPayloadPlaceholder: 'placeholder_aes_payload01'
+    }),
+  'crypto-claim-like payload placeholder should throw'
+);
+
+const envelopeBoundaryIssues = validateEncryptedPayloadPlaceholder('placeholder_rsa_payload01');
+assert(
+  envelopeBoundaryIssues.some((issue) => issue.code === 'payload_placeholder.crypto_claim_forbidden'),
+  'envelope boundary validation should reject crypto-claim-like placeholder values'
+);
+
 assert(canTransitionMessageStatus('draft', 'queued'), 'draft should transition to queued');
 assert(canTransitionMessageStatus('queued', 'sent'), 'queued should transition to sent');
 assert(canTransitionMessageStatus('sent', 'received'), 'sent should transition to received');
@@ -136,3 +157,83 @@ assertEqual(stripped.display, 'token=[REDACTED]', 'safe log object should redact
 const redactedLog = redactMessageLogText('private destination: abc123 token=secret-value');
 assert(!redactedLog.includes('abc123'), 'message log redaction should remove private destination value');
 assert(!redactedLog.includes('secret-value'), 'message log redaction should remove token value');
+
+const persistedMessages = new Map<string, ReturnType<typeof createPrivateMessage>>();
+
+const messageStoreDouble: LocalMessageStoreContract = {
+  save(entry) {
+    persistedMessages.set(entry.messageId, entry);
+    return entry;
+  },
+  getByMessageId(messageId) {
+    return persistedMessages.get(messageId);
+  },
+  listByConversationId(conversationId) {
+    return Array.from(persistedMessages.values()).filter(
+      (entry) => entry.conversationId === conversationId
+    );
+  },
+  updateStatus(messageId, nextStatus, updatedAt) {
+    const existing = persistedMessages.get(messageId);
+    if (existing === undefined) {
+      throw new Error('Message not found for update.');
+    }
+
+    const updated = {
+      ...existing,
+      status: nextStatus,
+      updatedAt
+    };
+
+    persistedMessages.set(messageId, updated);
+    return updated;
+  },
+  deleteByMessageId(messageId) {
+    return persistedMessages.delete(messageId);
+  }
+};
+
+assertLocalMessageStoreContract(messageStoreDouble);
+
+const persistedMessage = messageStoreDouble.save(message);
+assertEqual(
+  persistedMessage.messageId,
+  message.messageId,
+  'message store contract save should return saved message'
+);
+
+const loadedMessage = messageStoreDouble.getByMessageId(message.messageId);
+assert(loadedMessage !== undefined, 'message store contract should return saved message by id');
+assertEqual(
+  loadedMessage?.conversationId,
+  message.conversationId,
+  'message store contract should preserve conversation id'
+);
+
+const listedMessages = messageStoreDouble.listByConversationId(message.conversationId);
+assertEqual(listedMessages.length, 1, 'message store contract list should include saved conversation message');
+
+const storeUpdated = messageStoreDouble.updateStatus(
+  message.messageId,
+  'queued',
+  '2026-07-03T09:05:00.000Z'
+);
+assertEqual(storeUpdated.status, 'queued', 'message store contract should update status');
+assertEqual(
+  storeUpdated.updatedAt,
+  '2026-07-03T09:05:00.000Z',
+  'message store contract should update timestamp'
+);
+
+const deletedMessage = messageStoreDouble.deleteByMessageId(message.messageId);
+assertEqual(deletedMessage, true, 'message store contract should delete existing message');
+assertEqual(
+  messageStoreDouble.listByConversationId(message.conversationId).length,
+  0,
+  'message store contract list should be empty after delete'
+);
+
+assertThrows(
+  () => assertLocalMessageStoreContract({ save: () => message }),
+  'missing message store methods should fail contract assertion'
+);
